@@ -1,0 +1,16 @@
+{
+  "home_net": "[192.168.0.0/16,10.0.0.0/8,172.16.0.0/12]",
+  "external_net": "!$HOME_NET",
+  "http_ports": "[80,443]",
+  "shellcode_ports": "!80",
+  "eve_log": "false",
+  "http_log": "true",
+  "pcap_log": "false",
+  "drop_log": "true",
+  "unix_command": "true",
+  "stream_memcap": "64mb",
+  "stream_inline": "true",
+  "stream_checksum": "true",
+  "default_rule_path": "/var/lib/suricata/rules",
+  "custom_rule_file": "local.rules"
+}
