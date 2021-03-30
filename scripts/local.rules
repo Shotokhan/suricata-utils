@@ -1,0 +1,1 @@
+drop http any any -> $HOME_NET $HTTP_PORTS (msg:"python requests is blocked"; content:"python-requests"; http_user_agent;)
