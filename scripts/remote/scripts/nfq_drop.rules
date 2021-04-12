@@ -1,0 +1,4 @@
+*filter
+-A INPUT -j NFQUEUE
+-A OUTPUT -j NFQUEUE
+COMMIT

@@ -38,7 +38,7 @@ Note: SimpleHTTPServer hangs if packet is dropped (you will think that it's goin
 crontab -e
 Add this line:
 */2 * * * * <path>/check_suricata_run_reset_fw.sh >/dev/null 2>&1
-It will check that Suricata is up every 2 minutes, and if Suricata isn't up, it will flush iptables.
+It will check that Suricata is up every 2 minutes, and if Suricata isn't up, it will flush iptables' NFQUEUE chain.
 Look at crontab log: grep CRON /var/log/syslog
 Look at installed crontabs: crontab -l
 Warning: check SHELL and PATH variables in /etc/crontab
@@ -46,8 +46,7 @@ Very important warning: as from the following paragraph, you have to check if yo
 ```
 Start Suricata (WARNING: your SSH connection could hang):
 ```
-Run suricata_IPS.sh script, it will issue two iptables commands and then start Suricata daemon; again, if you don't have iptables on your system, check your equivalent: you have to create two NFQUEUE both with number 0, one for INPUT and the other one for OUTPUT.
-It will also sleep for a little time (you may want to configure it according to your machine), then it will check that Suricata is up and will flush iptables if it isn't.
+Run safe_suricata_IPS.sh script, it will start Suricata daemon and then it will use iptables-apply to safely create NFQUEUE chain (reading from nfq_drop.rules), with a timeout of 30 seconds; again, if you don't have iptables on your system, check your equivalent: you have to create two NFQUEUE both with number 0, one for INPUT and the other one for OUTPUT.
 If you want to do some tests on your VM, keep in mind that you need to make requests from another host in order to make Suricata drop them: Suricata will not drop on localhost (this is probably related to iptables, not to Suricata).
 ```
 Stop Suricata (WARNING: not necessary for the reloading of rules):
